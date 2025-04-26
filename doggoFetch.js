@@ -263,31 +263,6 @@ async function loadQuizData() {
 // TODO 5
 // Asynchronously call the loadQuizData() function,
 // Then call renderQuiz() with the returned imageUrl, correctAnswer, and choices
-async function quiz() {
-    try {
-        const quizData = await loadQuizData();
-
-        const { imageUrl, correctAnswer, choices } = quizData;
-
-        renderQuiz(imageUrl, correctAnswer, choices)
-    } catch(error) {
-        console.error('Failed to load quiz:', error);
-    }
-}
-
-// Start the quiz when the page loads
-//window.addEventListener('DOMContentLoaded', quiz);
-
-// Start quiz when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Clear previous state
-    document.getElementById("image-frame").innerHTML = '';
-    document.getElementById("options").innerHTML = '';
-    
-    // Start quiz
-    quiz().catch(error => {
-        console.error('Quiz initialization failed:', error);
-        document.getElementById("image-frame").innerHTML = 
-            '<p class="error">Failed to start quiz. Please refresh.</p>';
-    });
+loadQuizData().then(([imgUrl, correctAnswer, choices]) => {
+    renderQuiz(imgUrl, correctAnswer, choices);
 });
